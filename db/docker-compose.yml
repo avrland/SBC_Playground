@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  mariadb:
+    image: arm64v8/mariadb:latest
+    container_name: mariadb
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: "password"
+      MYSQL_DATABASE: "rpi_db"
+      MYSQL_USER: "mesho"
+      MYSQL_PASSWORD: "password"
+      MYSQL_ROOT_HOST: '%'  # needs to be enclosed with quotes
+    networks:
+      - rpi_network
+    volumes:
+      - mariadb_data:/var/lib/mysql
+
+  phpmyadmin:
+    image: arm64v8/phpmyadmin:latest
+    container_name: phpmyadmin
+    restart: always
+    depends_on:
+      - mariadb
+    environment:
+      PMA_HOST: mariadb
+    ports:
+      - "8080:80"
+    networks:
+      - rpi_network
+
+volumes:
+  mariadb_data:
+
+networks:
+  rpi_network:
+    driver: bridge
