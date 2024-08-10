@@ -16,3 +16,11 @@ sudo apt install python3-virtualenv
 python -m virtualenv poolEnv
 source poolEnv/bin/activate
 ```
+### Install and add neofetch to motd
+```
+sudo apt install neofetch
+```
+Add neofetch to
+```
+/etc/update-motd.d/
+```
